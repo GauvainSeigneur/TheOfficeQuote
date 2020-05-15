@@ -1,7 +1,8 @@
-package com.gauvain.seigneur.theofficequote
+package com.gauvain.seigneur.theofficequote.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.gauvain.seigneur.theofficequote.R
 
 class MainActivity : AppCompatActivity() {
 

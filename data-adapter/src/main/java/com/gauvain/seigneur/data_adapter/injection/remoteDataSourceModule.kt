@@ -1,8 +1,10 @@
 package com.gauvain.seigneur.data_adapter.injection
 
 import android.util.Log
+import com.gauvain.seigneur.data_adapter.adapter.GetTokenAdapter
 import com.gauvain.seigneur.data_adapter.service.FavQuoteService
 import com.gauvain.seigneur.data_adapter.service.HeaderApiTokenInterceptor
+import com.gauvain.seigneur.data_adapter.service.HeaderUserTokenInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,6 +28,9 @@ val remoteDataSourceModule = module {
                 HeaderApiTokenInterceptor(
                     getProperty("api_key")
                 )
+            )
+            .addNetworkInterceptor(
+                HeaderUserTokenInterceptor(GetTokenAdapter.constToken)
             )
             //.addNetworkInterceptor(HeaderUserTokenInterceptor(getProperty("api_key")))
             .connectTimeout(30L, TimeUnit.SECONDS)

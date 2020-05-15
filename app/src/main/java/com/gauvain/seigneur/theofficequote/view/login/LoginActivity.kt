@@ -1,7 +1,8 @@
-package com.gauvain.seigneur.theofficequote
+package com.gauvain.seigneur.theofficequote.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.gauvain.seigneur.theofficequote.R
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
 

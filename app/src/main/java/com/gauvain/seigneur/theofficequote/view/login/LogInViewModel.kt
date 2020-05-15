@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.theofficequote
+package com.gauvain.seigneur.theofficequote.view
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
