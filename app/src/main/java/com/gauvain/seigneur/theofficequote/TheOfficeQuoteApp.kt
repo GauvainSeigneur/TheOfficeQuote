@@ -1,6 +1,7 @@
 package com.gauvain.seigneur.theofficequote
 
 import android.app.Application
+import com.gauvain.seigneur.data_adapter.injection.localDataSourceModule
 import com.gauvain.seigneur.data_adapter.injection.remoteDataSourceModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
@@ -17,7 +18,8 @@ class TheOfficeQuoteApp : Application() {
             androidFileProperties()
             modules(
                 listOf(
-                    remoteDataSourceModule
+                    remoteDataSourceModule,
+                    localDataSourceModule
                 )
             )
         }
