@@ -1,2 +1,3 @@
 rootProject.name='TheOfficeQuote'
 include ':app'
+include ':domain'
