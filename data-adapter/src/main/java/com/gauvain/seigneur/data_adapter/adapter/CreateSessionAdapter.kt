@@ -1,14 +1,13 @@
 package com.gauvain.seigneur.data_adapter.adapter
 
-import com.gauvain.seigneur.data_adapter.model.Session
-import com.gauvain.seigneur.data_adapter.model.User
-import com.gauvain.seigneur.data_adapter.model.UserSession
-import com.gauvain.seigneur.data_adapter.model.toDomain
+import com.gauvain.seigneur.data_adapter.database.TheOfficequoteDataBase
+import com.gauvain.seigneur.data_adapter.model.*
 import com.gauvain.seigneur.data_adapter.service.FavQuoteService
 import com.gauvain.seigneur.domain.model.RequestExceptionType
 import com.gauvain.seigneur.domain.model.UserSessionModel
 import com.gauvain.seigneur.domain.provider.CreateSessionException
 import com.gauvain.seigneur.domain.provider.CreateSessionProvider
+import com.gauvain.seigneur.domain.provider.InsertTokenException
 import retrofit2.Response
 
 class CreateSessionAdapter(private val service: FavQuoteService) :
@@ -35,4 +34,6 @@ class CreateSessionAdapter(private val service: FavQuoteService) :
             } ?: throw CreateSessionException(RequestExceptionType.BODY_NULL, "Body null")
         }
     }
+
+
 }

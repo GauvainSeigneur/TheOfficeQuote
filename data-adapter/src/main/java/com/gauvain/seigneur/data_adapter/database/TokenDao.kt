@@ -13,6 +13,6 @@ interface TokenDao {
      * return long (transaction id)
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertToken(token: TokenEntity): Long
+    suspend fun insertToken(token: TokenEntity): Long
 
 }
