@@ -5,6 +5,4 @@ interface InsertTokenProvider {
     suspend fun insert(token:String): Long
 }
 
-class InsertTokenException(
-    val description: String? = null
-) : Exception()
+class InsertTokenException(val description: String? = null) : Exception()
