@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.theofficequote.view
+package com.gauvain.seigneur.theofficequote.view.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
