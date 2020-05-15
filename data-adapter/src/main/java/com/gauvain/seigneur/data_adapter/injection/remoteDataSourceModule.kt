@@ -21,6 +21,7 @@ val remoteDataSourceModule = module {
         ).setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
+    //set as factory in order to update GetTokenAdapter.constToken value when it is done
     factory {
         OkHttpClient.Builder()
             .addInterceptor(get())
@@ -32,7 +33,6 @@ val remoteDataSourceModule = module {
             .addNetworkInterceptor(
                 HeaderUserTokenInterceptor(GetTokenAdapter.constToken)
             )
-            //.addNetworkInterceptor(HeaderUserTokenInterceptor(getProperty("api_key")))
             .connectTimeout(30L, TimeUnit.SECONDS)
             .readTimeout(30L, TimeUnit.SECONDS)
             .build()
