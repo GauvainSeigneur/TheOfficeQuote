@@ -28,7 +28,7 @@ class FavQuotesViewModel(
         .setEnablePlaceholders(false)
         .build()
 
-    lateinit var quoteList: LiveData<PagedList<QuoteItemData>>
+    var quoteList: LiveData<PagedList<QuoteItemData>>?=null
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main

@@ -23,21 +23,18 @@ class FavQuotesFragment : BaseFragment() {
 
     private lateinit var adapter: FavQuoteListAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel.getFavQuotes(checkNetworkState(context))
+        if(viewModel.quoteList?.value == null) {
+            viewModel.getFavQuotes(checkNetworkState(context))
+        }
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        viewModel.quoteList.observe(viewLifecycleOwner, Observer {
+        viewModel.quoteList?.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
     }
