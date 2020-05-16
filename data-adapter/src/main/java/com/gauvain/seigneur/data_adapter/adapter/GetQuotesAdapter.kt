@@ -11,7 +11,7 @@ import retrofit2.Response
 class GetQuotesAdapter(private val service: FavQuoteService) :
     GetQuotesProvider {
 
-    override fun get(filter: String, type: String, page: Long): QuotesModel {
+    override fun get(filter: String, type: String, page: Int): QuotesModel {
         val result = runCatching {
             service.getQuotes(filter, type, page).execute()
         }.onFailure {

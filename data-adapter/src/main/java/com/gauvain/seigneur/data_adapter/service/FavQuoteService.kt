@@ -18,6 +18,6 @@ interface FavQuoteService {
     fun getQuotes(
         @Query("filter") user: String,
         @Query("type") type: String,
-        @Query("page") page: Long): Call<Quotes>
+        @Query("page") page: Int): Call<Quotes>
 
 }

@@ -6,7 +6,7 @@ import java.lang.Exception
 
 interface GetQuotesProvider {
     @Throws(GetQuotesException::class)
-    fun get(filter: String, type: String, page: Long): QuotesModel
+    fun get(filter: String, type: String, page: Int): QuotesModel
 }
 
 class GetQuotesException(
