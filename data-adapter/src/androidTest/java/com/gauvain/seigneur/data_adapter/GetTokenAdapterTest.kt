@@ -15,8 +15,15 @@ import java.io.IOException
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gauvain.seigneur.data_adapter.adapter.GetTokenAdapter
 import com.gauvain.seigneur.data_adapter.model.TokenEntity
+import junit.framework.Assert.fail
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Rule
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
+import java.util.concurrent.CompletableFuture
 
 @RunWith(AndroidJUnit4::class)
 class GetTokenAdapterTest {
@@ -49,5 +56,5 @@ class GetTokenAdapterTest {
             assert(result == "tokenValue")
         }
     }
-    
+
 }
