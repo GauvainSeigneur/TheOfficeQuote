@@ -15,15 +15,13 @@ class GetTokenAdapter(private val dataBase: TheOfficequoteDataBase) :
         runCatching {
             dataBase.tokenDao().getToken()
         }
-            .onFailure { throw InsertTokenException(it.message) }
+            .onFailure { throw GetTokenException(it.message) }
             .onSuccess {
                 token = it.token
                 constToken = token
             }
 
-        token?.let {
-            return it
-        } ?: throw InsertTokenException("Unknown Error")
+        token?.let { return it } ?: throw GetTokenException("Unknown Error")
     }
 
 }
