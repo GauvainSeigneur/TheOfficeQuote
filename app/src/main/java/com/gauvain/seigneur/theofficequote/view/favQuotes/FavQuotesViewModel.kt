@@ -26,8 +26,8 @@ class FavQuotesViewModel(
     init {
         dataSourceFactory = QuoteDataSourceFactory("gauvains", viewModelScope, useCase)
         val config = PagedList.Config.Builder()
-            .setPageSize(25)
-            //.setInitialLoadSizeHint(pageSize * 2)
+            //.setPageSize(25)
+            //.setInitialLoadSizeHint(25 * 2)
             .setEnablePlaceholders(false)
             .build()
         quoteList = LivePagedListBuilder<Int, QuoteItemData>(dataSourceFactory, config).build()

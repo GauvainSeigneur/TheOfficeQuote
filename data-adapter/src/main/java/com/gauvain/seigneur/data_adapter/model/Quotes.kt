@@ -24,9 +24,9 @@ data class Quote(
     @SerializedName("private")
     val isPrivate: Boolean,
     @SerializedName("tags")
-    val tags : List<String>,
+    val tags : List<String>?,
     @SerializedName("url")
-    val url : String,
+    val url : String?,
     @SerializedName("favorites_count")
     val favoritesCount : Int,
     @SerializedName("upvotes_count")
@@ -34,9 +34,9 @@ data class Quote(
     @SerializedName("downvotes_count")
     val downvotesCount : Int,
     @SerializedName("author")
-    val author : String,
+    val author : String?,
     @SerializedName("author_permalink")
-    val authorPermalink : String,
+    val authorPermalink : String?,
     @SerializedName("body")
     val body : String
 )

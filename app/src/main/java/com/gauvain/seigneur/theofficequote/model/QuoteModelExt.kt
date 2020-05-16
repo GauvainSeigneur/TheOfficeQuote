@@ -10,6 +10,10 @@ fun QuotesModel.toData():QuotesData = QuotesData(
 )
 
 private fun getQuoteItemData(model: QuoteModel): QuoteItemData =
-    QuoteItemData(model.body, model.author)
+    QuoteItemData(
+        model.id,
+        model.body,
+        model.author
+    )
 
 

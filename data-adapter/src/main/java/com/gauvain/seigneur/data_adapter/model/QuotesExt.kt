@@ -17,12 +17,12 @@ fun Quote.toDomain(): QuoteModel =
         id = this.id,
         isDialog = this.isDialog,
         isPrivate = this.isPrivate,
-        tags = this.tags,
-        url = this.url,
+        tags = this.tags?: emptyList(),
+        url = this.url?:"No Url provided",
         favoritesCount =  this.favoritesCount,
         upvotesCount = this.upvotesCount,
         downvotesCount = this.downvotesCount,
-        author = this.author,
-        authorPermalink = this.authorPermalink,
+        author = this.author?:"Not defined",
+        authorPermalink = this.authorPermalink?:"No permalink",
         body = this.body
     )

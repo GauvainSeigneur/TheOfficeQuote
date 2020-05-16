@@ -15,11 +15,8 @@ import kotlinx.coroutines.withContext
 class QuoteDataSource(
     val userName:String,
     val scope: CoroutineScope,
-    val useCase: GetUserFavoriteQuotesUseCase) : PageKeyedDataSource<Int, QuoteItemData>
-    () {
+    val useCase: GetUserFavoriteQuotesUseCase) : PageKeyedDataSource<Int, QuoteItemData>(){
 
-    var state: MutableLiveData<State> = MutableLiveData()
-    //private var retryCompletable: Completable? = null
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, QuoteItemData>) {
         scope.launch(Dispatchers.Main) {
@@ -28,12 +25,10 @@ class QuoteDataSource(
             }
             when (result) {
                 is Outcome.Success -> {
-                    Log.d("pagingQuotes initial", "Success")
-                    callback.onResult(result.data.toData().quotes, null, 2
-                    )
+                    Log.d("pagingQuotes initial", "Success ${result.data.toData().quotes}")
+                    callback.onResult(result.data.toData().quotes, null, 2)
                 }
                 is Outcome.Error -> {
-
                     Log.d("pagingQuotes initial", "error")
                 }
             }
