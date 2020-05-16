@@ -8,7 +8,7 @@ class GetTokenAdapter(private val dataBase: TheOfficequoteDataBase) :
 
     companion object {
         var constToken: String? = null
-        var constUserName: String? = null
+        var constUserName: String = ""
     }
 
     override suspend fun getToken(): String {

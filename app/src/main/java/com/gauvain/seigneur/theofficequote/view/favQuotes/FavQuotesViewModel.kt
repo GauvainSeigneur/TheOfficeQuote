@@ -6,13 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.gauvain.seigneur.data_adapter.adapter.GetTokenAdapter
 import com.gauvain.seigneur.domain.usecase.GetUserFavoriteQuotesUseCase
+import com.gauvain.seigneur.domain.usecase.InsertQuoteUseCase
 import com.gauvain.seigneur.theofficequote.model.QuoteItemData
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class FavQuotesViewModel(
-    val useCase: GetUserFavoriteQuotesUseCase
+    useCase: GetUserFavoriteQuotesUseCase,
+    insertQuoteUseCase: InsertQuoteUseCase
 ) : ViewModel(), CoroutineScope {
 
     var quoteList: LiveData<PagedList<QuoteItemData>>
@@ -24,9 +27,11 @@ class FavQuotesViewModel(
         get() = job + Dispatchers.Main
 
     init {
-        dataSourceFactory = QuoteDataSourceFactory("gauvains", viewModelScope, useCase)
+
+        dataSourceFactory = QuoteDataSourceFactory(GetTokenAdapter.constUserName, viewModelScope,
+            useCase, insertQuoteUseCase)
         val config = PagedList.Config.Builder()
-            //.setPageSize(25)
+            .setPageSize(25)
             //.setInitialLoadSizeHint(25 * 2)
             .setEnablePlaceholders(false)
             .build()

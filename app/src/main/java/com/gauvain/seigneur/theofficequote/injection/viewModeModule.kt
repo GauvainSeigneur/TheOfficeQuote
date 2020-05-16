@@ -21,6 +21,7 @@ val viewModelModule = module {
 
     viewModel {
         FavQuotesViewModel(
+            get(),
             get()
         )
     }
