@@ -14,6 +14,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -55,12 +56,21 @@ dependencies {
     implementation "androidx.room:room-coroutines:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
+
     testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kt_version"
-    testImplementation "com.google.truth:truth:$truth_version"
     testImplementation "org.mockito:mockito-inline:$mockito_inline_version"
+    testImplementation "com.google.truth:truth:$truth_version"
     testImplementation "android.arch.core:core-testing:$arch_core_testing_version"
     testImplementation "androidx.test:core:$androidx_core_test_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$corountine_test_version"
+    //For instrumented tests
+    androidTestImplementation "android.arch.core:core-testing:$arch_core_testing_version"
+    androidTestImplementation "androidx.test:core:$androidx_core_test_version"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$corountine_test_version"
+    androidTestImplementation "androidx.test.ext:junit:$androidx_ext_junit_version"
+    androidTestImplementation "androidx.test:rules:$androidx_test_rules"
+    androidTestImplementation "androidx.test:runner:$androidx_test_runner"
+
 }
