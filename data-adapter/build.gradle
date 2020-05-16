@@ -51,11 +51,11 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "androidx.paging:paging-runtime:$paging_version"
 
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-coroutines:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-
 
     testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"

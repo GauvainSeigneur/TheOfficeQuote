@@ -3,6 +3,7 @@ package com.gauvain.seigneur.theofficequote.view.favQuotes
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,9 +28,14 @@ class FavQuotesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
-        viewModel.quoteList.observe(viewLifecycleOwner, Observer {
-            Log.d("pagingObserved", "$it")
+        /*viewModel.quoteList.observe(viewLifecycleOwner, Observer {
+            //Log.d("pagingObserved", "$it")
             adapter.submitList(it)
+        })*/
+
+        viewModel.offLineQuotes.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(context, "lol $", Toast.LENGTH_LONG).show()
+            Log.d("offLineList", "$it")
         })
     }
 
