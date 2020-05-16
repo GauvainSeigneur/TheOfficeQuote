@@ -51,7 +51,7 @@ class GetTokenAdapterTest {
     @Test
     fun writeTokenInDataBaseAndGetItsValue() {
         runBlockingTest {
-            dao.insertToken(TokenEntity(0, "tokenValue"))
+            dao.insertToken(TokenEntity(0, "tokenValue", "userName"))
             val result = adapter.getToken()
             assert(result == "tokenValue")
         }

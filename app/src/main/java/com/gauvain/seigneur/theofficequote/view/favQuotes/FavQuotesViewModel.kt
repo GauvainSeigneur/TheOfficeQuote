@@ -27,6 +27,7 @@ class FavQuotesViewModel(
         .setPageSize(PAGE_SIZE)
         .setEnablePlaceholders(false)
         .build()
+
     lateinit var quoteList: LiveData<PagedList<QuoteItemData>>
     private val job = Job()
     override val coroutineContext: CoroutineContext

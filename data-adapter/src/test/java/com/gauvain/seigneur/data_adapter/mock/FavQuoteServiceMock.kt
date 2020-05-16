@@ -1,5 +1,6 @@
 package com.gauvain.seigneur.data_adapter.mock
 
+import com.gauvain.seigneur.data_adapter.model.Quotes
 import com.gauvain.seigneur.data_adapter.model.Session
 import com.gauvain.seigneur.data_adapter.model.User
 import com.gauvain.seigneur.data_adapter.model.UserSession
@@ -24,12 +25,21 @@ object FavQuoteServiceMock {
                     .postSession(UserSession(User("login", "password")))
             }
 
+            override fun getQuotes(user: String, type: String, page: Int): Call<Quotes> {
+                return behaviorDelegate.returning(Calls.failure<Throwable>(t))
+                    .getQuotes("filter", "type", 0)
+            }
+
         }
 
     fun createServiceWithResponses(response: Any? = null) =
         object : FavQuoteService {
             override fun postSession(body: UserSession): Call<Session> {
                 return behaviorDelegate.returningResponse(response).postSession(UserSession(User("login", "password")))
+            }
+
+            override fun getQuotes(user: String, type: String, page: Int): Call<Quotes> {
+                return behaviorDelegate.returningResponse(response).getQuotes("user", "type", 0)
             }
         }
 }

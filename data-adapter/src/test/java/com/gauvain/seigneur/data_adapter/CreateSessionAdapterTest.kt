@@ -21,7 +21,7 @@ class CreateSessionAdapterTest {
     }
 
     @Test
-    fun `When we receive object from provider it must return a list of statistics`() {
+    fun `When we receive object from provider it must return UserSession`() {
         val serviceSuccessResponse: FavQuoteService =
             FavQuoteServiceMock.createServiceWithResponses(ResponseGsonObjectMock.createSuccessSessionResponse())
         val provider = CreateSessionAdapter(serviceSuccessResponse)

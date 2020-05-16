@@ -42,7 +42,7 @@ class InsertTokenAdapterTest {
     @Test
     fun writeTokenInDataBaseAndGetItTransactionId() {
         runBlockingTest {
-            val result = adapter.insert("tokenValue")
+            val result = adapter.insert("tokenValue", "login")
             assert(result==1L)
         }
     }
