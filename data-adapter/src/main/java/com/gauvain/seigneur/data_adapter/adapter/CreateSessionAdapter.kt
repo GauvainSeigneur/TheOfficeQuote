@@ -27,6 +27,7 @@ class CreateSessionAdapter(private val service: FavQuoteService) :
                         throw CreateSessionException(RequestExceptionType.UNAUTHORIZED, session.message)
                     } else {
                         GetTokenAdapter.constToken = session?.token
+                        GetTokenAdapter.constUserName = session?.login
                         session?.toDomain()
                 }?:throw CreateSessionException(RequestExceptionType.BODY_NULL, "Body null")
             }

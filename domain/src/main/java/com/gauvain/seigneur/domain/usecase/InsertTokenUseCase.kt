@@ -7,7 +7,7 @@ import com.gauvain.seigneur.domain.provider.CreateSessionProvider
 import com.gauvain.seigneur.domain.provider.InsertTokenProvider
 
 interface InsertTokenUseCase {
-    suspend fun invoke(token:String): Outcome<Long, ErrorType>
+    suspend fun invoke(token:String, login:String): Outcome<Long, ErrorType>
 
     companion object {
         fun create(insertTokenProvider: InsertTokenProvider): InsertTokenUseCase =
