@@ -14,10 +14,14 @@ class FavQuoteItemViewHolder(
         val layout = R.layout.item_quotes
     }
 
-    fun bind(itemData: QuoteItemData?) {
+    fun bind(itemData: QuoteItemData?, listener: FavQuoteListAdapter.Listener) {
         with(itemView) {
             quoteTextView.text = itemData?.body
             authorTextView.text = itemData?.author
+
+            quoteItemView.setOnClickListener {
+                listener.onClick(itemData?.id)
+            }
         }
     }
 

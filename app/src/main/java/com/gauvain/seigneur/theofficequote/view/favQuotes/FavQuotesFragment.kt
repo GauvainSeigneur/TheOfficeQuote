@@ -6,15 +6,20 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gauvain.seigneur.theofficequote.R
+import com.gauvain.seigneur.theofficequote.model.LiveDataState
+import com.gauvain.seigneur.theofficequote.model.QuoteDetailsData
+import com.gauvain.seigneur.theofficequote.utils.event.EventObserver
+import com.gauvain.seigneur.theofficequote.view.QuoteDetailsActivity
 import com.gauvain.seigneur.theofficequote.view.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_fav_quotes.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class FavQuotesFragment : BaseFragment() {
+class FavQuotesFragment : BaseFragment(), FavQuoteListAdapter.Listener {
 
     override val fragmentLayout: Int
         get() = R.layout.fragment_fav_quotes
@@ -23,6 +28,12 @@ class FavQuotesFragment : BaseFragment() {
 
     private lateinit var adapter: FavQuoteListAdapter
 
+    override fun onClick(id: Int?) {
+        id?.let {
+            viewModel.getQuotesDetails(it)
+        }
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if(viewModel.quoteList?.value == null) {
@@ -30,24 +41,33 @@ class FavQuotesFragment : BaseFragment() {
         }
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         viewModel.quoteList?.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it)
         })
+        viewModel.displayDetailsEvent.observe(viewLifecycleOwner, EventObserver {
+            when(it) {
+                is LiveDataState.Success -> displayDetails(it.data)
+                is LiveDataState.Error -> {
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+    }
+
+    private fun displayDetails(data:QuoteDetailsData) {
+        context?.let {
+            startActivity(QuoteDetailsActivity.newIntent(it, data))
+        }
     }
 
     private fun initAdapter() {
-        adapter = FavQuoteListAdapter()
+        adapter = FavQuoteListAdapter(this)
         favQuotesRecyclerview.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,
             false)
         favQuotesRecyclerview.adapter = adapter
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
     }
 
     private fun checkNetworkState(context: Context): Boolean {

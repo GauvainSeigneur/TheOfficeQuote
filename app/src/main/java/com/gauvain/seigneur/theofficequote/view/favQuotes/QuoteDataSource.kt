@@ -3,6 +3,7 @@ package com.gauvain.seigneur.theofficequote.view.favQuotes
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
+import com.gauvain.seigneur.data_adapter.model.Quote
 import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.model.QuoteModel
 import com.gauvain.seigneur.domain.usecase.GetUserFavoriteQuotesUseCase
@@ -19,11 +20,11 @@ class QuoteDataSource(
     val scope: CoroutineScope,
     val useCase: GetUserFavoriteQuotesUseCase,
     val insertQuoteUseCase: InsertQuoteUseCase
-) : PageKeyedDataSource<Int, QuoteItemData>(){
+) : PageKeyedDataSource<Int, QuoteModel>(){
 
     private var isLastPage= false
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, QuoteItemData>) {
+    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, QuoteModel>) {
         scope.launch(Dispatchers.Main) {
             val result = withContext(Dispatchers.IO) {
                 useCase.invoke(userName, 1)
@@ -33,7 +34,7 @@ class QuoteDataSource(
                     Log.d("pagingQuotes initial", "Success ${result.data.toData().quotes}")
                     isLastPage = result.data.isLastPage
                     insertItem(insertQuoteUseCase, result.data.quoteList)
-                    callback.onResult(result.data.toData().quotes, null, 2)
+                    callback.onResult(result.data.quoteList, null, 2)
                 }
                 is Outcome.Error -> {
                     Log.d("pagingQuotes initial", "error")
@@ -42,7 +43,7 @@ class QuoteDataSource(
         }
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, QuoteItemData>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, QuoteModel>) {
         if(!isLastPage) {
             Log.d("pagingQuotes after", "called")
             scope.launch(Dispatchers.Main) {
@@ -54,7 +55,7 @@ class QuoteDataSource(
                         Log.d("pagingQuotes after", "Success")
                         isLastPage = result.data.isLastPage
                         insertItem(insertQuoteUseCase, result.data.quoteList)
-                        callback.onResult(result.data.toData().quotes, params.key + 1)
+                        callback.onResult(result.data.quoteList, params.key + 1)
                     }
                     is Outcome.Error -> {
 
@@ -65,7 +66,7 @@ class QuoteDataSource(
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, QuoteItemData>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, QuoteModel>) {
     }
 
     private suspend fun insertItem(insertQuoteUseCase: InsertQuoteUseCase, list:List<QuoteModel>) {

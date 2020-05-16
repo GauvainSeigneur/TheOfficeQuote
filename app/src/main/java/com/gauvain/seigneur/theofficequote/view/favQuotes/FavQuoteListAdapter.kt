@@ -6,7 +6,14 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.gauvain.seigneur.theofficequote.model.QuoteItemData
 
-class FavQuoteListAdapter() : PagedListAdapter<QuoteItemData, FavQuoteItemViewHolder>(DiffCallback) {
+class FavQuoteListAdapter(
+    private val listener: Listener) : PagedListAdapter<QuoteItemData, FavQuoteItemViewHolder>(DiffCallback) {
+
+    interface Listener {
+        fun onClick(
+            id:Int?
+        )
+    }
 
     companion object {
         val DiffCallback = object : DiffUtil.ItemCallback<QuoteItemData>() {
@@ -30,7 +37,7 @@ class FavQuoteListAdapter() : PagedListAdapter<QuoteItemData, FavQuoteItemViewHo
         )
 
     override fun onBindViewHolder(holder: FavQuoteItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), listener)
     }
 
     override fun getItemCount(): Int {
