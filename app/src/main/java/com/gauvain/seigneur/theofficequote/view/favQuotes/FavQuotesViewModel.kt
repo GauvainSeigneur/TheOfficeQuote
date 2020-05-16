@@ -1,9 +1,6 @@
 package com.gauvain.seigneur.theofficequote.view.favQuotes
 
-
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -17,44 +14,55 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class FavQuotesViewModel(
-    useCase: GetUserFavoriteQuotesUseCase,
-    insertQuoteUseCase: InsertQuoteUseCase,
-    dataBase: TheOfficequoteDataBase
+    private val useCase: GetUserFavoriteQuotesUseCase,
+    private val insertQuoteUseCase: InsertQuoteUseCase,
+    private val dataBase: TheOfficequoteDataBase
 ) : ViewModel(), CoroutineScope {
 
-    var quoteList: LiveData<PagedList<QuoteItemData>>
-    var offLineQuotes: LiveData<PagedList<QuoteItemEntity>>
+    companion object {
+        const val PAGE_SIZE = 25
+    }
 
-    private val dataSourceFactory: QuoteDataSourceFactory
-
-
+    private val config = PagedList.Config.Builder()
+        .setPageSize(PAGE_SIZE)
+        .setEnablePlaceholders(false)
+        .build()
+    lateinit var quoteList: LiveData<PagedList<QuoteItemData>>
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
-    init {
-        dataSourceFactory = QuoteDataSourceFactory(GetTokenAdapter.constUserName, viewModelScope,
-            useCase, insertQuoteUseCase)
-        val config = PagedList.Config.Builder()
-            .setPageSize(25)
-            //.setInitialLoadSizeHint(25 * 2)
-            .setEnablePlaceholders(false)
-            .build()
-        quoteList = LivePagedListBuilder<Int, QuoteItemData>(dataSourceFactory, config).build()
-
-        val factory: DataSource.Factory<Int, QuoteItemEntity> =
-            dataBase.quoteDao().getAllPagedItem()
-
-        val pagedListBuilder: LivePagedListBuilder<Int, QuoteItemEntity>  =
-            LivePagedListBuilder<Int, QuoteItemEntity>(factory, 25)
-        offLineQuotes = pagedListBuilder.build()
+    fun getFavQuotes(isConnected: Boolean) {
+        if(isConnected) {
+            getOnLineList()
+        } else {
+            getOffLineList()
+        }
     }
 
-    
+    private fun getOnLineList() {
+        val dataSourceFactory = QuoteDataSourceFactory(
+            GetTokenAdapter.constUserName,
+            viewModelScope,
+            useCase,
+            insertQuoteUseCase
+        )
+        quoteList = LivePagedListBuilder<Int, QuoteItemData>(dataSourceFactory, config).build()
+    }
+
+    private fun getOffLineList() {
+        val offLineFactory: DataSource.Factory<Int, QuoteItemEntity> = dataBase.quoteDao()
+            .getAllPagedItem()
+        val transformedOffLineFactory = offLineFactory.map {
+            QuoteItemData(it.id, it.body, it.author)
+        }
+        quoteList = LivePagedListBuilder<Int, QuoteItemData>(
+            transformedOffLineFactory,
+            config
+        ).build()
+    }
 
     override fun onCleared() {
         job.cancel()
     }
-
-
 }
