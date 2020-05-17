@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navigation_fav"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_favorite_white_24dp"
         android:title="Favorites"/>
 
     <item
         android:id="@+id/navigation_add"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="Add" />
+        android:icon="@drawable/ic_shuffle_white_24dp"
+        android:title="Random" />
 
     <item
         android:id="@+id/navigation_user"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:title="User" />
+        android:icon="@drawable/ic_account_circle_white_24dp"
+        android:title="Account" />
 
 </menu>

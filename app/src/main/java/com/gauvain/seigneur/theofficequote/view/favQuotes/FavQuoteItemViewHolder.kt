@@ -16,8 +16,8 @@ class FavQuoteItemViewHolder(
 
     fun bind(itemData: QuoteItemData?, listener: FavQuoteListAdapter.Listener) {
         with(itemView) {
-            quoteTextView.text = itemData?.body
-            authorTextView.text = itemData?.author
+            quoteTextView.text = itemData?.body?.getFormattedString(itemView.context)
+            authorTextView.text = itemData?.author?.getFormattedString(itemView.context)
 
             quoteItemView.setOnClickListener {
                 listener.onClick(itemData?.id)

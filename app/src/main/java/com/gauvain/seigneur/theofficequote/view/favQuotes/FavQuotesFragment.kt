@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gauvain.seigneur.theofficequote.R
@@ -67,6 +68,12 @@ class FavQuotesFragment : BaseFragment(), FavQuoteListAdapter.Listener {
         adapter = FavQuoteListAdapter(this)
         favQuotesRecyclerview.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL,
             false)
+        favQuotesRecyclerview.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                LinearLayoutManager.VERTICAL
+            )
+        )
         favQuotesRecyclerview.adapter = adapter
     }
 

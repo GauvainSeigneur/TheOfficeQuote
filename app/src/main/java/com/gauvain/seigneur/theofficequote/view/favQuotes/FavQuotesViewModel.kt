@@ -79,7 +79,7 @@ class FavQuotesViewModel(
         quoteList = LivePagedListBuilder<Int, QuoteItemData>(
             offLineFactory.map {
                 quoteDetailsModelList.add(it.toDetailsData())
-                QuoteItemData(it.id, it.body, it.author)
+                it.toData()
             },
             config
         ).build()

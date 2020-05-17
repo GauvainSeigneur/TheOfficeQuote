@@ -11,12 +11,17 @@
 
     <TextView
         android:id="@+id/quoteTextView"
+        style="@style/TextAppearance.Quote.Body"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/space_xs"/>
 
     <TextView
         android:id="@+id/authorTextView"
+        style="@style/TextAppearance.Quote.Author"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/space_xs"
+        android:paddingEnd="@null"/>
 
 </LinearLayout>

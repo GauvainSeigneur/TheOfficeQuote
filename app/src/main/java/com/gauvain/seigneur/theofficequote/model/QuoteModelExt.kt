@@ -2,6 +2,8 @@ package com.gauvain.seigneur.theofficequote.model
 
 import com.gauvain.seigneur.domain.model.QuoteModel
 import com.gauvain.seigneur.domain.model.QuotesModel
+import com.gauvain.seigneur.theofficequote.R
+import com.gauvain.seigneur.theofficequote.utils.StringPresenter
 
 fun QuotesModel.toData():QuotesData = QuotesData(
     quotes = this.quoteList.map {
@@ -12,8 +14,8 @@ fun QuotesModel.toData():QuotesData = QuotesData(
 fun QuoteModel.toData(): QuoteItemData =
     QuoteItemData(
         id = this.id,
-        body = this.body,
-        author = this.author
+        body = StringPresenter(R.string.quote_placeholder, this.body),
+        author = StringPresenter(R.string.author_placeholder, this.author)
     )
 
 fun QuoteModel.toDetailsData(): QuoteDetailsData =
