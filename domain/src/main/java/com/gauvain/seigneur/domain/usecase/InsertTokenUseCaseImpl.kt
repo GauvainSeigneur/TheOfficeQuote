@@ -7,13 +7,12 @@ import com.gauvain.seigneur.domain.provider.InsertTokenProvider
 internal class InsertTokenUseCaseImpl(private val insertTokenProvider: InsertTokenProvider) :
     InsertTokenUseCase {
 
-    override suspend fun invoke(token: String): Outcome<Long, ErrorType> {
+    override suspend fun invoke(token: String, login: String): Outcome<Long, ErrorType> {
         return try {
-            val result = insertTokenProvider.insert(token)
+            val result = insertTokenProvider.insert(token, login)
             Outcome.Success(result)
         } catch (e: InsertTokenException) {
             Outcome.Error(ErrorType.ERROR_UNKNOWN)
         }
     }
-
 }

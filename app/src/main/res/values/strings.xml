@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">TheOfficeQuote</string>
+    <string name="app_name">The Office Quote</string>
+    <string name="quote_placeholder">\"%s\"</string>
+    <string name="author_placeholder">- %s</string>
 </resources>

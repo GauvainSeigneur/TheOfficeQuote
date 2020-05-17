@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.gauvain.seigneur.theofficequote.model.LiveDataState
-import com.gauvain.seigneur.theofficequote.view.MainActivity
+import com.gauvain.seigneur.theofficequote.view.main.MainActivity
 import com.gauvain.seigneur.theofficequote.view.login.LoginActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 

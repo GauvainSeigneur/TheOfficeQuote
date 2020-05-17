@@ -22,17 +22,15 @@ class CreateSessionAdapter(private val service: FavQuoteService) :
 
     private fun handleResult(result: Result<Response<Session>>): UserSessionModel {
         return result.run {
-            getOrNull()?.body().let {session ->
-                if (session?.errorCode != null && session.errorCode != 0) {
-                    throw CreateSessionException(RequestExceptionType.UNAUTHORIZED, session.message)
-                } else {
-                    session?.let {
-                        GetTokenAdapter.constToken = it.token
-                        it.toDomain()
-                    }
-                }
-
-            } ?: throw CreateSessionException(RequestExceptionType.BODY_NULL, "Body null")
+            getOrNull()?.body().let { session ->
+                    if (session?.errorCode != null && session.errorCode != 0) {
+                        throw CreateSessionException(RequestExceptionType.UNAUTHORIZED, session.message)
+                    } else {
+                        GetTokenAdapter.constToken = session?.token
+                        GetTokenAdapter.constUserName = session?.login?:""
+                        session?.toDomain()
+                }?:throw CreateSessionException(RequestExceptionType.BODY_NULL, "Body null")
+            }
         }
     }
 

@@ -11,7 +11,7 @@ data class Session(
     val email: String,
     //in case of error like api key uncorrect
     @SerializedName("error_code")
-    val errorCode: Int? = null,
+    override val errorCode: Int? = null,
     @SerializedName("message")
-    val message: String? = null
-)
+    override val message: String? = null
+):BaseResponse()

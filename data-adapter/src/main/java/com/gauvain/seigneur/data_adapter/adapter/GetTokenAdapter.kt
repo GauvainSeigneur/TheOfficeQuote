@@ -8,6 +8,7 @@ class GetTokenAdapter(private val dataBase: TheOfficequoteDataBase) :
 
     companion object {
         var constToken: String? = null
+        var constUserName: String = ""
     }
 
     override suspend fun getToken(): String {
@@ -16,9 +17,12 @@ class GetTokenAdapter(private val dataBase: TheOfficequoteDataBase) :
             dataBase.tokenDao().getToken()
         }
             .onFailure { throw GetTokenException(it.message) }
-            .onSuccess {
-                token = it.token
-                constToken = token
+            .onSuccess { tokenEntity ->
+               tokenEntity?.let {
+                   token = it.token
+                   constToken = token
+                   constUserName = it.userName
+               }?: throw GetTokenException("Token entity null")
             }
 
         token?.let { return it } ?: throw GetTokenException("Unknown Error")

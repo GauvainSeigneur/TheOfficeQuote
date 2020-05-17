@@ -27,8 +27,8 @@ class InsertTokenUseCaseImplTest {
     @Test
     fun `When we receive success from provider adapter must return OutCome Success`() {
         runBlockingTest {
-            given(provider.insert ("token")).willReturn(1L)
-            val outcome = useCase.invoke("token")
+            given(provider.insert ("token", "login")).willReturn(1L)
+            val outcome = useCase.invoke("token", "login")
             assertThat(outcome).isNotNull()
             assertThat(outcome).isEqualTo(Outcome.Success(1L))
         }
@@ -37,8 +37,8 @@ class InsertTokenUseCaseImplTest {
     @Test
     fun `When we receive ERROR from provider adapter must return OutCome Error`() {
         runBlockingTest {
-            given(provider.insert ("token")).willThrow(InsertTokenException("Error"))
-            val outcome = useCase.invoke("token")
+            given(provider.insert ("token", "login")).willThrow(InsertTokenException("Error"))
+            val outcome = useCase.invoke("token", "login")
             assertThat(outcome).isNotNull()
             assertThat(outcome).isEqualTo(Outcome.Error(ErrorType.ERROR_UNKNOWN))
         }
