@@ -10,9 +10,9 @@ data class QuoteDetailsData(
     val isPrivate: Boolean,
     val tags : List<String>,
     val url : String,
-    val favoritesCount : Int,
-    val upvotesCount : Int,
-    val downvotesCount : Int,
+    val favoritesCount : String,
+    val upvotesCount : String,
+    val downvotesCount : String,
     val author : String,
     val authorPermalink : String,
     val body : String

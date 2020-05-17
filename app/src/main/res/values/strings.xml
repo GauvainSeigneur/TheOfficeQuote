@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">The Office Quote</string>
+    <string name="details_title">Details</string>
     <string name="quote_placeholder">\"%s\"</string>
     <string name="author_placeholder">- %s</string>
+    <string name="common_error_info">Oops, something went wrong</string>
+    <string name="link">Link</string>
 </resources>

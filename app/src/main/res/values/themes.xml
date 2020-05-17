@@ -26,6 +26,7 @@
         <item name="toolbarStyle">@style/Widget.Toolbar</item>
         <item name="appBarLayoutStyle">@style/Widget.AppbarLayout</item>
         <item name="bottomNavigationStyle">@style/Widget.BottomNavigation</item>
+        <item name="materialButtonStyle">@style/Widget.Button</item>
         <!--Typography -->
         <item name="android:fontFamily">@font/default_work_font_family</item>
         <item name="textAppearanceHeadline1">@style/Typography.TextAppearance.Headline1</item>

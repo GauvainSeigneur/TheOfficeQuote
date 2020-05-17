@@ -4,6 +4,7 @@ import com.gauvain.seigneur.domain.model.QuoteModel
 import com.gauvain.seigneur.domain.model.QuotesModel
 import com.gauvain.seigneur.theofficequote.R
 import com.gauvain.seigneur.theofficequote.utils.StringPresenter
+import java.text.NumberFormat
 
 fun QuotesModel.toData():QuotesData = QuotesData(
     quotes = this.quoteList.map {
@@ -25,9 +26,9 @@ fun QuoteModel.toDetailsData(): QuoteDetailsData =
         isPrivate = this.isPrivate,
         tags = this.tags,
         url = this.url,
-        favoritesCount = this.favoritesCount,
-        upvotesCount = this.upvotesCount,
-        downvotesCount = this.downvotesCount,
+        favoritesCount = NumberFormat.getInstance().format(this.favoritesCount),
+        upvotesCount = NumberFormat.getInstance().format(this.upvotesCount),
+        downvotesCount = NumberFormat.getInstance().format(this.downvotesCount),
         body = this.body,
         author = this.author,
         authorPermalink = this.authorPermalink
