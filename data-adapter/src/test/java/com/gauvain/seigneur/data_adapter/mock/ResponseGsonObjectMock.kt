@@ -1,14 +1,34 @@
 package com.gauvain.seigneur.data_adapter.mock
 
-import com.gauvain.seigneur.data_adapter.model.BaseResponse
-import com.gauvain.seigneur.data_adapter.model.Quote
-import com.gauvain.seigneur.data_adapter.model.Quotes
-import com.gauvain.seigneur.data_adapter.model.Session
+import com.gauvain.seigneur.data_adapter.model.*
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import retrofit2.Response
 
 object ResponseGsonObjectMock {
+
+    fun createSuccessCurrentUserResponse(): CurrentUser {
+        val type = object : TypeToken<CurrentUser>() {
+        }.type
+        return GsonBuilder().create().fromJson(
+            """
+                {
+                    "login": "gose",
+                    "pic_url": "https://pbs.twimg.com/profile_images/2160924471/Screen_Shot_2012-04-23_at_9.23.44_PM_.png",
+                    "public_favorites_count": 520,
+                    "followers": 12,
+                    "following": 23,
+                    "pro": true,
+                    "account_details": {
+                        "email": "gose@favqs.com",
+                        "private_favorites_count": 22,
+                        "active_theme_id": 1,
+                        "pro_expiration": "2015-03-13T07:19:06.133-05:00"
+                    }
+                }
+                """.trimIndent(), type
+        )
+    }
 
     fun createSuccessSessionResponse(): Session {
         val type = object : TypeToken<Session>() {
@@ -61,10 +81,9 @@ object ResponseGsonObjectMock {
         }.type
         return GsonBuilder().create().fromJson(
             """
-                {
-                     "User-Token": "abc123",
-                     "login": "user_login",
-                     "email": "user_email"
+                 {
+                    "error_code": 23,
+                    "message": "User login or password is missing"
                 }
                     """.trimIndent(), type
         )
@@ -72,6 +91,19 @@ object ResponseGsonObjectMock {
 
     fun createMessageQuoteResponse(): Quotes {
         val type = object : TypeToken<Quotes>() {
+        }.type
+        return GsonBuilder().create().fromJson(
+            """
+                {
+                "error_code": 23,
+                "message": "Oops"
+                }
+                    """.trimIndent(), type
+        )
+    }
+
+    fun createMessageGetUserResponse(): CurrentUser {
+        val type = object : TypeToken<CurrentUser>() {
         }.type
         return GsonBuilder().create().fromJson(
             """

@@ -46,7 +46,7 @@ class CreateSessionAdapterTest {
             RequestExceptionType.UNAUTHORIZED
         )
         Truth.assertThat((result.exceptionOrNull() as CreateSessionException).description).isEqualTo(
-            "User login or password is missing.")
+            "User login or password is missing")
     }
 
 }

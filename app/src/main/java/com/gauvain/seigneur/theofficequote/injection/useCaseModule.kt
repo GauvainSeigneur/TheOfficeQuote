@@ -9,4 +9,5 @@ val useCaseModule = module {
     single { GetTokenUseCase.create(get()) }
     single { GetUserFavoriteQuotesUseCase.create(get()) }
     single { InsertQuoteUseCase.create(get()) }
+    single { GetCurrentUserUseCase.create(get()) }
 }

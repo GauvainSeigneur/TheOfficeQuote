@@ -1,9 +1,6 @@
 package com.gauvain.seigneur.data_adapter.mock
 
-import com.gauvain.seigneur.data_adapter.model.Quotes
-import com.gauvain.seigneur.data_adapter.model.Session
-import com.gauvain.seigneur.data_adapter.model.User
-import com.gauvain.seigneur.data_adapter.model.UserSession
+import com.gauvain.seigneur.data_adapter.model.*
 import com.gauvain.seigneur.data_adapter.service.FavQuoteService
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -30,6 +27,11 @@ object FavQuoteServiceMock {
                     .getQuotes("filter", "type", 0)
             }
 
+            override fun getUser(login: String): Call<CurrentUser> {
+                return behaviorDelegate.returning(Calls.failure<Throwable>(t))
+                    .getUser("login")
+            }
+
         }
 
     fun createServiceWithResponses(response: Any? = null) =
@@ -40,6 +42,10 @@ object FavQuoteServiceMock {
 
             override fun getQuotes(user: String, type: String, page: Int): Call<Quotes> {
                 return behaviorDelegate.returningResponse(response).getQuotes("user", "type", 0)
+            }
+
+            override fun getUser(login: String): Call<CurrentUser> {
+                return behaviorDelegate.returningResponse(response).getUser("login")
             }
         }
 }
