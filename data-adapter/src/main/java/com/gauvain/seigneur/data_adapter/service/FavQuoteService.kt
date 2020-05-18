@@ -18,6 +18,6 @@ interface FavQuoteService {
     fun getUser(@Path(value = "login", encoded = true) login: String): Call<CurrentUser>
 
     @GET("qotd")
-    fun getRandom(): Call<SingleQuote>
+    fun getRandom(): Call<QuoteOfDay>
 
 }

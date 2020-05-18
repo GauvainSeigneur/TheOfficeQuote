@@ -20,7 +20,7 @@ class GetRandomQuoteAdapter(private val service: FavQuoteService) :
         return handleResult(result)
     }
 
-    private fun handleResult(result: Result<Response<SingleQuote>>): QuoteModel {
+    private fun handleResult(result: Result<Response<QuoteOfDay>>): QuoteModel {
         return result.run {
             getOrNull()?.body().let { quote ->
                     if (quote?.errorCode != null && quote.errorCode != 0) {
