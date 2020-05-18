@@ -11,9 +11,10 @@ A mobile application which uses favQuote REST API.
 * Coroutine - Asynchronous and non-blocking programming
 * Mockito - Mock dependencies
 * Koin - Dependency injection
+* Coil - Image loading
 
 ## State
-WIP
+Done
 
 ## Licence
 ```
