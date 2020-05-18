@@ -7,7 +7,6 @@ import androidx.paging.PagedList
 import com.gauvain.seigneur.data_adapter.adapter.GetTokenAdapter
 import com.gauvain.seigneur.data_adapter.database.TheOfficequoteDataBase
 import com.gauvain.seigneur.data_adapter.model.QuoteItemEntity
-import com.gauvain.seigneur.domain.model.QuoteModel
 import com.gauvain.seigneur.domain.usecase.GetUserFavoriteQuotesUseCase
 import com.gauvain.seigneur.domain.usecase.InsertQuoteUseCase
 import com.gauvain.seigneur.theofficequote.model.*
@@ -15,8 +14,8 @@ import com.gauvain.seigneur.theofficequote.utils.event.Event
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-
 typealias DisplayDetailsEventState = Event<LiveDataState<QuoteDetailsData>>
+typealias InitialLoadingState = LiveDataState<LoadingState>
 
 class FavQuotesViewModel(
     private val useCase: GetUserFavoriteQuotesUseCase,
@@ -32,13 +31,19 @@ class FavQuotesViewModel(
         .setPageSize(PAGE_SIZE)
         .setEnablePlaceholders(false)
         .build()
+    private var isLastRequestConnected = true
     var quoteDetailsModelList = mutableListOf<QuoteDetailsData>()
     var quoteList: LiveData<PagedList<QuoteItemData>>? = null
+    // ...because this is what we'll want to expose
+    val initialLoadingState = MediatorLiveData<InitialLoadingState>()
     val displayDetailsEvent = MutableLiveData<DisplayDetailsEventState>()
-
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
+
+    fun resetList() {
+        quoteList?.value?.dataSource?.invalidate()
+    }
 
     fun getFavQuotes(isConnected: Boolean) {
         quoteDetailsModelList.clear()
@@ -53,7 +58,7 @@ class FavQuotesViewModel(
         val item = quoteDetailsModelList.firstOrNull { it.id == id }
         item?.let {
             displayDetailsEvent.value = Event(LiveDataState.Success(it))
-        }?: handleNoDetailsItemFound()
+        } ?: handleNoDetailsItemFound()
     }
 
     private fun handleNoDetailsItemFound() {
@@ -61,6 +66,7 @@ class FavQuotesViewModel(
     }
 
     private fun getOnLineList() {
+        isLastRequestConnected = true
         val dataSourceFactory = QuoteDataSourceFactory(
             GetTokenAdapter.constUserName,
             viewModelScope,
@@ -71,9 +77,26 @@ class FavQuotesViewModel(
             quoteDetailsModelList.add(it.toDetailsData())
             it.toData()
         }, config).build()
+        val initialLoadingData =
+            Transformations.switchMap(dataSourceFactory.quoteDataSourceLiveData) {
+                it.initialLoadingData
+            }
+        val initialErrorData = Transformations.switchMap(dataSourceFactory.quoteDataSourceLiveData)
+        { it.initialError }
+
+        initialLoadingState
+            .addSource(initialErrorData) { result: ErrorData ->
+                result.let {
+                    initialLoadingState.value = LiveDataState.Error(result)
+                }
+            }
+        initialLoadingState.addSource(initialLoadingData) {
+            initialLoadingState.value = LiveDataState.Success(it)
+        }
     }
 
     private fun getOffLineList() {
+        isLastRequestConnected = false
         val offLineFactory: DataSource.Factory<Int, QuoteItemEntity> = dataBase.quoteDao()
             .getAllPagedItem()
         quoteList = LivePagedListBuilder<Int, QuoteItemData>(

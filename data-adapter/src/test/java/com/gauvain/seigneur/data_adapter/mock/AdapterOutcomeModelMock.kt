@@ -1,10 +1,28 @@
 package com.gauvain.seigneur.data_adapter.mock
 
-import com.gauvain.seigneur.domain.model.QuoteModel
-import com.gauvain.seigneur.domain.model.QuotesModel
-import com.gauvain.seigneur.domain.model.UserSessionModel
+import com.gauvain.seigneur.domain.model.*
+import com.gauvain.seigneur.domain.utils.SERVER_DATE_FORMAT
+import com.gauvain.seigneur.domain.utils.toDate
 
 object AdapterOutcomeModelMock {
+
+     fun createCurrentUserSuccessOutCome(): CurrentUserModel =
+        CurrentUserModel(
+            login = "gose",
+            picUrl = "https://pbs.twimg.com/profile_images/2160924471/Screen_Shot_2012-04-23_at_9.23.44_PM_.png",
+            publicFavCount = 520,
+            followers = 12,
+            following = 23,
+            isPro = true,
+            accountDetails = AccountDetailsModel(
+                email = "gose@favqs.com",
+                privateFavCount = 22,
+                activeThemeId = 1,
+                proExpiration = "2015-03-13T07:19:06.133-05:00".toDate(SERVER_DATE_FORMAT)
+            )
+        )
+
+
 
     fun createUserSessionModelSuccessOutCome(): UserSessionModel =
         UserSessionModel(userToken = "abc123", login = "user_login", email = "user_email")

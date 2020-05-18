@@ -1,15 +1,16 @@
 package com.gauvain.seigneur.theofficequote.view.login
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gauvain.seigneur.domain.model.Outcome
 import com.gauvain.seigneur.domain.usecase.CreateSessionUseCase
 import com.gauvain.seigneur.domain.usecase.InsertTokenUseCase
+import com.gauvain.seigneur.theofficequote.R
 import com.gauvain.seigneur.theofficequote.model.ErrorData
 import com.gauvain.seigneur.theofficequote.model.ErrorDataType
 import com.gauvain.seigneur.theofficequote.model.LiveDataState
+import com.gauvain.seigneur.theofficequote.utils.StringPresenter
 import com.gauvain.seigneur.theofficequote.utils.event.Event
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -30,18 +31,25 @@ class LogInViewModel(
     }
 
     val loginEvent = MutableLiveData<LoginEventState>()
+    val missingFieldEvent = MutableLiveData<Event<StringPresenter>>()
 
-    fun login(userId:String, userPassword:String) {
-        viewModelScope.launch(Dispatchers.Main) {
-            val result = withContext(Dispatchers.IO) {
-                createSessionUseCase.invoke(userId, userPassword)
-            }
-            when (result) {
-                is Outcome.Success -> { insertToken(result.data.userToken, result.data.login) }
-                is Outcome.Error -> {
-                    loginEvent.value = Event(LiveDataState.Error(ErrorData(ErrorDataType.INFORMATIVE)))
+    fun login(userId:String?, userPassword:String?) {
+        if(!userId.isNullOrEmpty() && !userPassword.isNullOrEmpty()) {
+            viewModelScope.launch(Dispatchers.Main) {
+                val result = withContext(Dispatchers.IO) {
+                    createSessionUseCase.invoke(userId, userPassword)
+                }
+                when (result) {
+                    is Outcome.Success -> {
+                        insertToken(result.data.userToken, result.data.login)
+                    }
+                    is Outcome.Error -> {
+                        loginEvent.value = Event(LiveDataState.Error(ErrorData(ErrorDataType.INFORMATIVE)))
+                    }
                 }
             }
+        } else {
+            missingFieldEvent.value = Event(StringPresenter(R.string.error_missing_field))
         }
     }
 

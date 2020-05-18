@@ -15,7 +15,7 @@ class GetQuotesAdapter(private val service: FavQuoteService) :
         val result = runCatching {
             service.getQuotes(filter, type, page).execute()
         }.onFailure {
-            throw GetQuotesException(RequestExceptionType.UNKNOWN_HOST, "message")
+            throw GetQuotesException(RequestExceptionType.UNKNOWN_HOST, it.message)
         }
         return handleResult(result)
     }

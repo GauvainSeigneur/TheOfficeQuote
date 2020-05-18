@@ -15,7 +15,7 @@ class CreateSessionAdapter(private val service: FavQuoteService) :
         val result = runCatching {
             service.postSession(UserSession(User(userId, userPassword))).execute()
         }.onFailure {
-            throw CreateSessionException(RequestExceptionType.UNKNOWN_HOST, "message")
+            throw CreateSessionException(RequestExceptionType.UNKNOWN_HOST, it.message)
         }
         return handleResult(result)
     }

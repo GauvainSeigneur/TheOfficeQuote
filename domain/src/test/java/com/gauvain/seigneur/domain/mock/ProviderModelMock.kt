@@ -1,8 +1,6 @@
 package com.gauvain.seigneur.domain.mock
 
-import com.gauvain.seigneur.domain.model.QuoteModel
-import com.gauvain.seigneur.domain.model.QuotesModel
-import com.gauvain.seigneur.domain.model.UserSessionModel
+import com.gauvain.seigneur.domain.model.*
 
 object ProviderModelMock {
 
@@ -10,6 +8,21 @@ object ProviderModelMock {
         "userToken",
         "userEmail",
         "userLogin"
+    )
+
+    fun createCurrentUserModel(): CurrentUserModel = CurrentUserModel(
+        login = "login",
+        picUrl = "picUrl",
+        publicFavCount = 2,
+        followers = 3,
+        following = 1,
+        isPro = false,
+        accountDetails = AccountDetailsModel(
+            email = "email",
+            privateFavCount = 0,
+            activeThemeId = 1,
+            proExpiration = null
+        )
     )
 
     fun createUserFavQuoteModel(): QuotesModel =

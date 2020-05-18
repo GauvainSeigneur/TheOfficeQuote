@@ -20,4 +20,10 @@ val adapterModule = module {
     single<InsertQuoteItemProvider> {
         InsertQuoteItemAdapter(get())
     }
+    single<GetUserProvider> {
+        GetUserAdapter(get())
+    }
+    single<GetRandomQuoteProvider> {
+        GetRandomQuoteAdapter(get())
+    }
 }

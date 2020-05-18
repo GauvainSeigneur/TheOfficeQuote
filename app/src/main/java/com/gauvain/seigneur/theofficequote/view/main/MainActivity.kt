@@ -8,8 +8,8 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.gauvain.seigneur.theofficequote.R
 import com.gauvain.seigneur.theofficequote.utils.FragmentStateManager
-import com.gauvain.seigneur.theofficequote.view.addQuote.AddQuoteFragment
 import com.gauvain.seigneur.theofficequote.view.favQuotes.FavQuotesFragment
+import com.gauvain.seigneur.theofficequote.view.randomQuote.RandomQuoteFragment
 import com.gauvain.seigneur.theofficequote.view.user.UserFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -31,6 +31,9 @@ class MainActivity : AppCompatActivity() {
             showFragment(getNavPositionFromMenuItem(item))
             true
         }
+        bottomNavigation.setOnNavigationItemReselectedListener {
+            //do nothing
+        }
     }
 
     /**
@@ -42,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             override fun getItem(position: Int): Fragment {
                 when (position) {
                     0 -> return FavQuotesFragment()
-                    1 -> return AddQuoteFragment()
+                    1 -> return RandomQuoteFragment()
                     2 -> return UserFragment()
                 }
                 return FavQuotesFragment()
