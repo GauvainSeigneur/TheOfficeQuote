@@ -5,4 +5,13 @@
     <string name="author_placeholder">- %s</string>
     <string name="common_error_info">Oops, something went wrong</string>
     <string name="link">Link</string>
+    <string name="error_fetch_data_title">Oops&#8230; Data not found</string>
+    <string name="error_fetch_data_description">Please check your internet connection and retry.</string>
+    <string name="retry">retry</string>
+    <string name="random_quote_button">Another random quote</string>
+    <string name="favorites_place_holders">Favorites: %s</string>
+    <string name="login_hint">Login</string>
+    <string name="password_hint">Password</string>
+    <string name="connect_title">Connect</string>
+    <string name="error_missing_field">Please, fill all fields to connect.</string>
 </resources>

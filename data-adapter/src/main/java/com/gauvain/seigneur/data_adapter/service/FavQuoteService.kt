@@ -17,4 +17,7 @@ interface FavQuoteService {
     @GET("users/{login}")
     fun getUser(@Path(value = "login", encoded = true) login: String): Call<CurrentUser>
 
+    @GET("quotes")
+    fun getRandom(): Call<SingleQuote>
+
 }

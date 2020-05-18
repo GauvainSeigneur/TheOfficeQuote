@@ -1,28 +1,28 @@
-package com.gauvain.seigneur.theofficequote.view.user
+package com.gauvain.seigneur.theofficequote.view.randomQuote
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import coil.api.load
 import com.gauvain.seigneur.theofficequote.R
 import com.gauvain.seigneur.theofficequote.model.LiveDataState
 import com.gauvain.seigneur.theofficequote.model.LoadingState
+import com.gauvain.seigneur.theofficequote.utils.safeClick.setOnSafeClickListener
 import com.gauvain.seigneur.theofficequote.view.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_user.*
-import kotlinx.android.synthetic.main.fragment_user.loadingView
+import kotlinx.android.synthetic.main.fragment_random_quote.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class UserFragment : BaseFragment() {
+class RandomQuoteFragment : BaseFragment() {
 
-    private val viewModel : UserViewModel by viewModel()
+    private val viewModel : RandomQuoteViewModel by viewModel()
 
     override val fragmentLayout: Int
-        get() = R.layout.fragment_user
-
+        get() = R.layout.fragment_random_quote
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        randomButtom.setOnSafeClickListener {
+            viewModel.getRandom()
+        }
         viewModel.loadingData.observe(viewLifecycleOwner, Observer {
             when(it) {
                 LoadingState.IS_LOADING -> {
@@ -35,38 +35,25 @@ class UserFragment : BaseFragment() {
             }
         })
 
-        viewModel.userInfo.observe(viewLifecycleOwner, Observer {
+        viewModel.randomQuoteInfo.observe(viewLifecycleOwner, Observer {
             when(it) {
                 is LiveDataState.Success -> {
-                    userPicView.load(it.data.picUrl
-                    ) {
-                        placeholder(R.drawable.ic_account_circle_white_24dp)
-                        error(R.drawable.ic_account_circle_white_24dp)
-                        fallback(R.drawable.ic_account_circle_white_24dp)
-                    }
-                    userLoginView.text = it.data.nickName
-                    userFavoritessView.text = it.data.favCount.getFormattedString(view.context)
+                    randomQuoteLayout.visibility = View.VISIBLE
+                    quoteTextView.text = it.data.body.getFormattedString(view.context)
+                    authorTextView.text = it.data.author.getFormattedString(view.context)
                 }
                 is LiveDataState.Error -> {
                     loadingView.visibility = View.VISIBLE
+                    randomQuoteLayout.visibility = View.GONE
                     loadingView.setError(
                         it.errorData.title?.getFormattedString(view.context),
                         it.errorData.description?.getFormattedString(view.context),
                         it.errorData.buttonText?.getFormattedString(view.context)
                     )
-                    { viewModel.getUser() }
+                    { viewModel.getRandom() }
                 }
             }
         })
-
-
-
     }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-    }
-
 
 }

@@ -1,6 +1,5 @@
 package com.gauvain.seigneur.data_adapter.adapter
 
-import android.util.Log
 import com.gauvain.seigneur.data_adapter.database.TheOfficequoteDataBase
 import com.gauvain.seigneur.data_adapter.model.*
 import com.gauvain.seigneur.domain.model.QuoteModel
@@ -15,11 +14,9 @@ class InsertQuoteItemAdapter(val dataBase: TheOfficequoteDataBase) :
             dataBase.quoteDao().insertQuote(quoteModel.toEntity())
         }
             .onFailure {
-                Log.d("insert quote", "error ${it.message}")
                 throw InsertTokenException(it.message)
             }
             .onSuccess {
-                Log.d("insert quote", "success")
                 transaction = it
             }
 

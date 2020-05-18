@@ -20,7 +20,6 @@ class LoginActivity : AppCompatActivity() {
         ): Intent = Intent(context, LoginActivity::class.java)
     }
 
-
     private val viewModel: LogInViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,15 +30,22 @@ class LoginActivity : AppCompatActivity() {
             viewModel.login(userIdEditText.text.toString(), userPasswordEditText.text.toString())
         }
         observeLiveData()
-
     }
 
     private fun observeLiveData() {
-        viewModel.loginEvent.observe(this, EventObserver{
-            when(it) {
+        viewModel.loginEvent.observe(this, EventObserver {
+            when (it) {
                 is LiveDataState.Success -> startActivity(MainActivity.newIntent(this))
-                is LiveDataState.Error -> { Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()}
+                is LiveDataState.Error -> {
+                    Toast.makeText(this, getString(R.string.common_error_info), Toast.LENGTH_LONG).show()
+                }
             }
+        })
+        viewModel.missingFieldEvent.observe(this, EventObserver {
+            Toast.makeText(
+                this@LoginActivity, it.getFormattedString(this@LoginActivity),
+                Toast.LENGTH_SHORT
+            ).show()
         })
     }
 }

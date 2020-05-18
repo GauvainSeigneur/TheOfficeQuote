@@ -1,4 +1,4 @@
-package com.gauvain.seigneur.theofficequote.view
+package com.gauvain.seigneur.theofficequote.view.details
 
 import android.content.Context
 import android.content.Intent

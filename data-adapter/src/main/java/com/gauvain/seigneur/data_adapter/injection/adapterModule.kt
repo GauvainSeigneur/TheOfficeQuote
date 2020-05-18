@@ -23,4 +23,7 @@ val adapterModule = module {
     single<GetUserProvider> {
         GetUserAdapter(get())
     }
+    single<GetRandomQuoteProvider> {
+        GetRandomQuoteAdapter(get())
+    }
 }

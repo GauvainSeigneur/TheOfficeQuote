@@ -4,6 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.gauvain.seigneur.theofficequote.R
 import com.gauvain.seigneur.theofficequote.model.QuoteItemData
+import com.gauvain.seigneur.theofficequote.utils.safeClick.setOnSafeClickListener
 import kotlinx.android.synthetic.main.item_quotes.view.*
 
 class FavQuoteItemViewHolder(
@@ -19,7 +20,7 @@ class FavQuoteItemViewHolder(
             quoteTextView.text = itemData?.body?.getFormattedString(itemView.context)
             authorTextView.text = itemData?.author?.getFormattedString(itemView.context)
 
-            quoteItemView.setOnClickListener {
+            quoteItemView.setOnSafeClickListener {
                 listener.onClick(itemData?.id)
             }
         }

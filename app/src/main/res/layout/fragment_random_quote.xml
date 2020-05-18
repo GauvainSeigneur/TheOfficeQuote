@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.gauvain.seigneur.theofficequote.widgets.LoadingView
+        android:id="@+id/loadingView"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/randomQuoteLayout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/quoteTextView"
+            style="@style/TextAppearance.Details.Quote.Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/space_m"
+            android:paddingStart="@dimen/space_m"
+            android:paddingEnd="@dimen/space_m"
+            android:paddingBottom="@dimen/space_xs"
+            tools:text="Body"/>
+
+        <TextView
+            android:id="@+id/authorTextView"
+            style="@style/TextAppearance.Details.Quote.Author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/space_m"
+            android:paddingEnd="@dimen/space_m"
+            android:paddingBottom="@dimen/space_m"
+            android:paddingTop="@dimen/space_s"
+            tools:text="Author"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/randomButtom"
+            android:layout_marginTop="@dimen/space_m"
+            android:layout_marginEnd="@dimen/space_xl"
+            android:layout_marginStart="@dimen/space_xl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/random_quote_button"/>
+
+    </LinearLayout>
+
+</FrameLayout>

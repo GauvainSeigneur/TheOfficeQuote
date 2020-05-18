@@ -1,7 +1,6 @@
 package com.gauvain.seigneur.data_adapter.model
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 data class CurrentUser(
     @SerializedName("login")
